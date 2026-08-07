@@ -16,6 +16,7 @@ body{
   color:var(--white);
   -webkit-font-smoothing:antialiased;
 }
+body.nav-open{overflow:hidden}
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .skip-link:focus{position:static;width:auto;height:auto;padding:8px;background:var(--white);color:var(--bg);z-index:999}
 .header-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;max-width:var(--max-width);margin:0 auto}
@@ -24,12 +25,14 @@ body{
 .search-wrap input{width:100%;padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:var(--white)}
 .menu-toggle{background:none;border:0;padding:8px;display:inline-flex;flex-direction:column;gap:4px}
 .menu-toggle .bar{display:block;width:22px;height:2px;background:var(--white);border-radius:2px}
+.menu-toggle:focus-visible{outline:3px solid rgba(217,137,0,0.18);outline-offset:3px}
 .primary-nav{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-top:1px solid rgba(255,255,255,0.02);position:relative}
 .primary-nav ul{list-style:none;display:flex;gap:6px;overflow:auto;padding:8px 12px;margin:0;max-width:var(--max-width);margin-left:auto;margin-right:auto}
 .primary-nav a{color:var(--muted);text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:14px}
 .primary-nav a:hover, .primary-nav a:focus{color:var(--gold);outline:2px solid rgba(217,137,0,0.12)}
 /* Mobile open state for navigation */
-.primary-nav.open ul{flex-direction:column;gap:6px;padding:12px;margin:0;box-shadow:0 10px 30px rgba(0,0,0,0.5);background:linear-gradient(180deg,#07101a,#07101a);position:absolute;left:0;right:0;top:56px;z-index:250}
+.primary-nav.open{position:fixed;left:0;right:0;top:56px;z-index:250;background:linear-gradient(180deg,#07101a,#07101a);box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.primary-nav.open ul{flex-direction:column;gap:6px;padding:12px;margin:0}
 .primary-nav.open a{display:block}
 .breaking{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#2b0505;border-top:4px solid #7f1d1d}
 .breaking strong{background:#7f1d1d;padding:8px 12px;border-radius:6px;color:var(--white);font-weight:800}
