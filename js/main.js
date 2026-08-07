@@ -5,7 +5,7 @@ async function loadData(){
   try{
     const res = await fetch(DATA_URL);
     const data = await res.json();
-    return data.articles;
+    return data.articles || [];
   }catch(err){
     console.error('Failed to load demo articles', err);
     return [];
@@ -19,19 +19,22 @@ function formatDate(iso){
   }catch(e){return iso}
 }
 
+// Safer element builder that correctly sets attributes (including aria-*, data-*, href)
 function el(tag, attrs={}, children=[]) {
   const node = document.createElement(tag);
   Object.entries(attrs).forEach(([k,v])=>{
-    if(k === 'class') node.className = v;
-    else if(k === 'dataset' && typeof v === 'object') {
+    if (k === 'class') {
+      node.className = v;
+    } else if (k === 'dataset' && typeof v === 'object') {
       Object.entries(v).forEach(([dk,dv])=> node.dataset[dk]=dv);
+    } else if (k === 'href') {
+      node.setAttribute('href', v);
+    } else if (k.includes('-') || typeof node[k] === 'undefined') {
+      // hyphenated attributes (aria-label, data-*, etc.) and unknown props -> setAttribute
+      node.setAttribute(k, v);
+    } else {
+      node[k] = v;
     }
-    else if(k === 'aria'){
-      Object.entries(v).forEach(([ak,av])=> node.setAttribute('aria-'+ak,av));
-    }
-    else if(k.startsWith('data-')) node.setAttribute(k, v);
-    else if(k === 'href') node.setAttribute('href', v);
-    else node[k]=v;
   });
   children.forEach(c => node.append(typeof c === 'string' ? document.createTextNode(c) : c));
   return node;
@@ -39,6 +42,7 @@ function el(tag, attrs={}, children=[]) {
 
 function renderFeatured(article){
   const f = document.getElementById('featured');
+  if(!f) return;
   f.innerHTML='';
   if(!article) return;
   // Create a link so the featured story is clickable in the next phase
@@ -58,6 +62,7 @@ function renderFeatured(article){
 
 function renderGrid(articles){
   const grid = document.getElementById('grid');
+  if(!grid) return;
   grid.innerHTML='';
   articles.forEach(a=>{
     // Use anchor so the card is clickable; href points to a placeholder detail page
@@ -76,6 +81,7 @@ function renderGrid(articles){
 
 function setupTicker(articles){
   const ticker = document.getElementById('ticker');
+  if(!ticker) return;
   if(!articles.length){ ticker.textContent = 'No demo headlines available.'; return; }
   // use first 8 titles
   ticker.innerHTML = '';
@@ -88,20 +94,25 @@ function setupTicker(articles){
 
 function setupSearch(allArticles){
   const input = document.getElementById('search');
+  const resultsCount = document.getElementById('resultsCount');
+  const shownCategory = document.getElementById('shownCategory');
+  if(!input) return;
   input.addEventListener('input', (e)=>{
     const q = e.target.value.trim().toLowerCase();
     const filtered = allArticles.filter(a=>
       a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q) || a.category.toLowerCase().includes(q)
     );
-    document.getElementById('shownCategory').textContent = q ? `Search: "${q}"` : 'All';
-    document.getElementById('resultsCount').textContent = `${filtered.length} results`;
+    if(shownCategory) shownCategory.textContent = q ? `Search: "${q}"` : 'All';
+    if(resultsCount) resultsCount.textContent = `${filtered.length} results`;
     renderGrid(filtered);
     renderFeatured(filtered[0] || allArticles[0]);
   });
 }
 
 function setupNav(allArticles){
-  document.querySelectorAll('.primary-nav a').forEach(a=>{
+  const navLinks = document.querySelectorAll('.primary-nav a');
+  if(!navLinks) return;
+  navLinks.forEach(a=>{
     a.addEventListener('click', (e)=>{
       e.preventDefault();
       const cat = a.dataset.cat;
@@ -109,14 +120,18 @@ function setupNav(allArticles){
       if(cat === 'all') filtered = allArticles;
       else if(cat === 'breaking') filtered = allArticles.slice(0,8);
       else filtered = allArticles.filter(x=>x.category === cat);
-      document.getElementById('shownCategory').textContent = cat === 'all' ? 'All' : cat;
-      document.getElementById('resultsCount').textContent = `${filtered.length} results`;
+      const rc = document.getElementById('resultsCount');
+      const sc = document.getElementById('shownCategory');
+      if(sc) sc.textContent = cat === 'all' ? 'All' : cat;
+      if(rc) rc.textContent = `${filtered.length} results`;
       renderGrid(filtered);
       renderFeatured(filtered[0] || allArticles[0]);
       // close mobile menu if open
       const nav = document.getElementById('primary-navigation');
-      nav.classList.remove('open');
-      document.getElementById('menuToggle').setAttribute('aria-expanded','false');
+      if(nav) nav.classList.remove('open');
+      const mt = document.getElementById('menuToggle');
+      if(mt) mt.setAttribute('aria-expanded','false');
+      document.body.classList.remove('nav-open');
     });
   });
 }
@@ -124,9 +139,11 @@ function setupNav(allArticles){
 function setupMenuToggle(){
   const btn = document.getElementById('menuToggle');
   const nav = document.getElementById('primary-navigation');
+  if(!btn || !nav) return;
   btn.addEventListener('click', ()=>{
     const open = nav.classList.toggle('open');
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('nav-open', open);
   });
 }
 
