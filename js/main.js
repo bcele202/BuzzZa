@@ -23,7 +23,14 @@ function el(tag, attrs={}, children=[]) {
   const node = document.createElement(tag);
   Object.entries(attrs).forEach(([k,v])=>{
     if(k === 'class') node.className = v;
+    else if(k === 'dataset' && typeof v === 'object') {
+      Object.entries(v).forEach(([dk,dv])=> node.dataset[dk]=dv);
+    }
+    else if(k === 'aria'){
+      Object.entries(v).forEach(([ak,av])=> node.setAttribute('aria-'+ak,av));
+    }
     else if(k.startsWith('data-')) node.setAttribute(k, v);
+    else if(k === 'href') node.setAttribute('href', v);
     else node[k]=v;
   });
   children.forEach(c => node.append(typeof c === 'string' ? document.createTextNode(c) : c));
@@ -34,6 +41,8 @@ function renderFeatured(article){
   const f = document.getElementById('featured');
   f.innerHTML='';
   if(!article) return;
+  // Create a link so the featured story is clickable in the next phase
+  const link = el('a',{class:'featured-link',href:`article.html?id=${encodeURIComponent(article.id)}`,role:'link','aria-label':article.title});
   const thumb = el('div',{class:'thumb'},[article.image || article.category.slice(0,2)]);
   const body = el('div',{class:'f-body'});
   const cat = el('div',{class:'category-pill'},[article.category]);
@@ -41,14 +50,18 @@ function renderFeatured(article){
   const p = el('p',{},[article.excerpt]);
   const meta = el('div',{class:'meta'},[`${article.source || 'BuzzZA'} • ${formatDate(article.publishedAt)}`]);
   body.append(cat,h,p,meta);
-  f.append(thumb,body);
+  link.append(thumb,body);
+  // demo label
+  const note = el('div',{class:'meta'},['DEMO DATA — not live news']);
+  f.append(link,note);
 }
 
 function renderGrid(articles){
   const grid = document.getElementById('grid');
   grid.innerHTML='';
   articles.forEach(a=>{
-    const card = el('article',{class:'card',tabIndex:0});
+    // Use anchor so the card is clickable; href points to a placeholder detail page
+    const card = el('a',{class:'card',href:`article.html?id=${encodeURIComponent(a.id)}`,tabIndex:0,'aria-label':a.title});
     const thumb = el('div',{class:'thumb'},[a.image || a.category.slice(0,2)]);
     const body = el('div',{class:'c-body'});
     const cat = el('div',{class:'category-pill'},[a.category]);
@@ -64,7 +77,7 @@ function renderGrid(articles){
 function setupTicker(articles){
   const ticker = document.getElementById('ticker');
   if(!articles.length){ ticker.textContent = 'No demo headlines available.'; return; }
-  // use first 6 titles
+  // use first 8 titles
   ticker.innerHTML = '';
   articles.slice(0,8).forEach(a=>{
     const s = document.createElement('span');
