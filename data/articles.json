@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "source":"demo",
+    "note":"This file contains 20 demo/mock articles for layout and testing. Replace with a real news API or dataset in production.",
+    "generatedAt":"2026-08-07T00:00:00Z"
+  },
+  "articles": [
+    {
+      "id": "sa-1",
+      "title": "South Africa announces new coastal conservation initiative",
+      "excerpt": "The government today unveiled a five-year plan to protect critical marine habitats and support local fishing communities.",
+      "category": "South Africa",
+      "publishedAt": "2026-08-07T08:30:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "world-1",
+      "title": "Global leaders meet to discuss climate adaptation funding",
+      "excerpt": "Representatives from 40 countries agreed to explore financing options to help vulnerable nations adapt to changing weather patterns.",
+      "category": "World",
+      "publishedAt": "2026-08-07T07:20:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "sport-1",
+      "title": "Springboks edge out rivals in nail-biting test match",
+      "excerpt": "A late penalty secured victory in front of a packed stadium, as fans celebrated through the night.",
+      "category": "Sport",
+      "publishedAt": "2026-08-06T19:45:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "ent-1",
+      "title": "Local filmmaker wins international festival award",
+      "excerpt": "The director's debut feature was praised for its storytelling and striking visuals at the awards ceremony.",
+      "category": "Entertainment",
+      "publishedAt": "2026-08-05T11:15:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "biz-1",
+      "title": "South African tech startups attract record investment",
+      "excerpt": "Investors poured capital into fintech and green energy startups during the latest funding round.",
+      "category": "Business",
+      "publishedAt": "2026-08-04T09:00:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "tech-1",
+      "title": "New AI tool promises faster translation for African languages",
+      "excerpt": "Researchers say the model improves accuracy for under-resourced languages and aims to boost accessibility.",
+      "category": "Technology",
+      "publishedAt": "2026-08-03T14:00:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "life-1",
+      "title": "Urban gardening trends take root in Cape Town",
+      "excerpt": "Community gardens and rooftop plots are helping residents grow fresh produce and connect with neighbours.",
+      "category": "Lifestyle",
+      "publishedAt": "2026-08-02T10:30:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "sa-2",
+      "title": "Education reforms announced to improve rural schools",
+      "excerpt": "Officials outlined plans to increase teacher training and digital resources for remote areas.",
+      "category": "South Africa",
+      "publishedAt": "2026-08-01T08:00:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "world-2",
+      "title": "Trade talks resume between major global partners",
+      "excerpt": "Negotiators hope to remove tariffs and streamline supply chains after months of stalled discussions.",
+      "category": "World",
+      "publishedAt": "2026-07-30T12:00:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "sport-2",
+      "title": "Proteas captain announces World Cup squad",
+      "excerpt": "A balanced selection combines youth and experience as the team prepares for the international tournament.",
+      "category": "Sport",
+      "publishedAt": "2026-07-29T16:50:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "ent-2",
+      "title": "Music festival lineup promises diverse local acts",
+      "excerpt": "Organisers highlight emerging artists alongside established performers in a celebration of sound.",
+      "category": "Entertainment",
+      "publishedAt": "2026-07-28T09:40:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "biz-2",
+      "title": "Small businesses adapt with digital payment solutions",
+      "excerpt": "Merchants report increased sales after adopting contactless and mobile payment platforms.",
+      "category": "Business",
+      "publishedAt": "2026-07-27T07:30:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "tech-2",
+      "title": "Local university launches coding bootcamp for youth",
+      "excerpt": "The initiative aims to close the skills gap and provide pathways into the tech industry.",
+      "category": "Technology",
+      "publishedAt": "2026-07-26T13:20:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "life-2",
+      "title": "Healthy eating: affordable recipes for busy families",
+      "excerpt": "Nutritionists share simple meal ideas that are both budget-friendly and nourishing.",
+      "category": "Lifestyle",
+      "publishedAt": "2026-07-25T08:10:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "sa-3",
+      "title": "Renewable energy project expands in KwaZulu-Natal",
+      "excerpt": "A large-scale solar farm is expected to create jobs and increase local power supply resilience.",
+      "category": "South Africa",
+      "publishedAt": "2026-07-24T11:00:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "world-3",
+      "title": "Humanitarian aid corridor opens after diplomatic talks",
+      "excerpt": "Aid agencies say the corridor will speed up deliveries to communities in need.",
+      "category": "World",
+      "publishedAt": "2026-07-23T15:40:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "sport-3",
+      "title": "Rising star signs multi-year deal with top club",
+      "excerpt": "The young athlete's transfer marks a major milestone and sparks discussion among fans.",
+      "category": "Sport",
+      "publishedAt": "2026-07-22T18:00:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "ent-3",
+      "title": "Streaming service announces slate of local productions",
+      "excerpt": "New commissions aim to boost the local creative economy and tell South African stories.",
+      "category": "Entertainment",
+      "publishedAt": "2026-07-21T10:05:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "biz-3",
+      "title": "Bank unveils simplified loans program for SMEs",
+      "excerpt": "The scheme is designed to reduce paperwork and speed up access to capital for entrepreneurs.",
+      "category": "Business",
+      "publishedAt": "2026-07-20T09:00:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    },
+    {
+      "id": "tech-3",
+      "title": "Startups experiment with blockchain for supply chain transparency",
+      "excerpt": "Pilot projects aim to prove traceability and improve consumer trust in product origins.",
+      "category": "Technology",
+      "publishedAt": "2026-07-19T14:45:00Z",
+      "source": "BuzzZA",
+      "image": ""
+    }
+  ]
+}

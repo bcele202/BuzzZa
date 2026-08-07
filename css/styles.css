@@ -1,0 +1,65 @@
+/* Mobile-first, responsive styles for BuzzZA */
+:root{
+  --bg:#0b0b0b; /* deep black */
+  --card:#0f1724; /* dark card */
+  --muted:#9ca3af;
+  --gold:#d97706; /* gold/orange */
+  --white:#ffffff;
+  --max-width:1100px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin:0;
+  background:linear-gradient(180deg,#0b0b0b 0%, #07101a 100%);
+  color:var(--white);
+  -webkit-font-smoothing:antialiased;
+}
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{position:static;width:auto;height:auto;padding:8px;background:var(--white);color:var(--bg);z-index:999}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;max-width:var(--max-width);margin:0 auto}
+.brand img{display:block}
+.search-wrap{flex:1;margin:0 16px}
+.search-wrap input{width:100%;padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:var(--white)}
+.menu-toggle{background:none;border:0;padding:8px;display:inline-flex;flex-direction:column;gap:4px}
+.menu-toggle .bar{display:block;width:22px;height:2px;background:var(--white);border-radius:2px}
+.primary-nav{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-top:1px solid rgba(255,255,255,0.02);}
+.primary-nav ul{list-style:none;display:flex;gap:6px;overflow:auto;padding:8px 12px;margin:0;max-width:var(--max-width);margin-left:auto;margin-right:auto}
+.primary-nav a{color:var(--muted);text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:14px}
+.primary-nav a:hover, .primary-nav a:focus{color:var(--gold);outline:2px solid rgba(217,137,0,0.12)}
+.breaking{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#2b0505;border-top:4px solid #7f1d1d}
+.breaking strong{background:#7f1d1d;padding:8px 12px;border-radius:6px;color:var(--white);font-weight:800}
+.ticker{white-space:nowrap;overflow:hidden;flex:1}
+.ticker span{display:inline-block;padding-right:48px}
+/* Hero */
+.hero{padding:22px 16px;background:linear-gradient(180deg, rgba(217,137,0,0.06), rgba(255,255,255,0.01));border-bottom:1px solid rgba(255,255,255,0.02)}
+.hero-inner{max-width:var(--max-width);margin:0 auto}
+.eyebrow{color:var(--gold);font-weight:800;letter-spacing:0.08em}
+h1{font-size:clamp(20px,6vw,38px);margin:8px 0}
+.lead{color:var(--muted);max-width:60ch}
+.container{max-width:var(--max-width);margin:20px auto;padding:0 16px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:18px 0}
+.featured{display:block;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03)}
+.featured .meta{color:var(--muted);font-size:13px;margin-top:6px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+.card{background:rgba(255,255,255,0.02);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:12px;align-items:flex-start}
+.card .thumb{width:110px;height:70px;background:linear-gradient(135deg,var(--gold),#111827);display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:800}
+.card h3{margin:0;color:var(--white);font-size:16px}
+.card p{margin:6px 0;color:var(--muted);font-size:14px}
+.card .meta{color:var(--muted);font-size:12px}
+.category-pill{background:rgba(217,137,0,0.12);color:var(--gold);padding:6px 8px;border-radius:999px;font-weight:800;font-size:12px}
+.footer-inner{max-width:var(--max-width);margin:30px auto;padding:24px 16px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.footer-nav{display:flex;gap:12px}
+.footer-nav a{color:var(--muted);text-decoration:none}
+.legal{color:var(--muted);font-size:13px}
+.visually-hidden{position:absolute;left:-9999px}
+/* Desktop */
+@media(min-width:700px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:980px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .featured{display:flex;gap:16px;align-items:center}
+  .featured .thumb{width:340px;height:200px;flex:0 0 340px}
+}
