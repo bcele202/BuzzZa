@@ -141,6 +141,9 @@ function setupNav(allArticles){
       if(nav) nav.classList.remove('open');
       const mt = document.getElementById('menuToggle');
       if(mt) mt.setAttribute('aria-expanded','false');
+      // disable focus trap when closing via nav link and restore focus
+      if(nav) trapFocus(nav, false);
+      if(mt) mt.focus();
       document.body.classList.remove('nav-open');
     });
   });
@@ -206,6 +209,12 @@ function setupMenuToggle(){
   const articles = await loadData();
   // sort by publishedAt desc
   articles.sort((a,b)=> new Date(b.publishedAt) - new Date(a.publishedAt));
+  // initialize results count and shown category on load
+  const resultsEl = document.getElementById('resultsCount');
+  if(resultsEl) resultsEl.textContent = `${articles.length} results`;
+  const shownEl = document.getElementById('shownCategory');
+  if(shownEl) shownEl.textContent = 'All';
+
   setupTicker(articles);
   renderGrid(articles);
   renderFeatured(articles[0]);
