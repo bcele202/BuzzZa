@@ -90,7 +90,7 @@
       if(cfg && cfg.liveApi && cfg.liveApi.url){
         try{
           const live = await fetchLiveArticles(cfg);
-          if(live && live.length) return live;
+           return live;
         }catch(e){
           // fall through to demo
           console.warn('Live fetch failed, falling back to demo data', e && e.message);
