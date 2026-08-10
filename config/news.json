@@ -1,0 +1,11 @@
+{
+  "liveApi": {
+    "url": "",
+    "provider": "newsapi",
+    "apiKey": "",
+    "apiKeyPlacement": "query",
+    "apiKeyName": "apiKey",
+    "query": "",
+    "note": "Fill liveApi.url and apiKey in config/news.json when integrating a live provider. Do NOT commit secrets."
+  }
+}
