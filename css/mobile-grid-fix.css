@@ -1,0 +1,29 @@
+/* Small viewport enforcement: ensure single-column grid below 700px and guard nav/container padding */
+@media (max-width:699px){
+  /* Force a single column grid at small widths (fixes multi-column rendering on mobile) */
+  .grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ensure the grid container won't exceed viewport due to padding */
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* Prevent primary navigation padding/overflow from expanding page width on mobile */
+  .primary-nav ul {
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
+  }
+
+  /* Ensure each card fits within the column */
+  a.card, article.card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
