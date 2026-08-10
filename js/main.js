@@ -146,6 +146,40 @@ function setupNav(allArticles){
   });
 }
 
+function trapFocus(container, trap){
+  // container: element to trap inside; trap: boolean to enable/disable
+  if(!container) return;
+  const focusableSelector = 'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
+  const focusable = Array.from(container.querySelectorAll(focusableSelector)).filter(el => !el.hasAttribute('disabled'));
+  if(!trap){
+    // remove stored handler if any
+    if(container.__trapHandler){
+      document.removeEventListener('keydown', container.__trapHandler);
+      container.__trapHandler = null;
+    }
+    return;
+  }
+
+  let first = focusable[0];
+  let last = focusable[focusable.length - 1];
+  const handler = function(e){
+    if(e.key !== 'Tab') return;
+    if(e.shiftKey){
+      if(document.activeElement === first){
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if(document.activeElement === last){
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  };
+  container.__trapHandler = handler;
+  document.addEventListener('keydown', handler);
+}
+
 function setupMenuToggle(){
   const btn = document.getElementById('menuToggle');
   const nav = document.getElementById('primary-navigation');
@@ -154,6 +188,16 @@ function setupMenuToggle(){
     const open = nav.classList.toggle('open');
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.classList.toggle('nav-open', open);
+    // trap focus when nav is open
+    if(open){
+      trapFocus(nav, true);
+      // focus the first focusable item inside nav
+      const first = nav.querySelector('a, button');
+      if(first) first.focus();
+    } else {
+      trapFocus(nav, false);
+      btn.focus();
+    }
   });
 }
 
