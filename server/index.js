@@ -42,7 +42,7 @@ function normalizeArticle(item, idx){
 app.get('/api/news', async (req, res) => {
   // Proxy endpoint that keeps the API key on server-side
   const NEWS_API_KEY = process.env.NEWS_API_KEY;
-  const NEWS_API_URL = process.env.NEWS_API_URL || 'https://newsapi.org/v2/top-headlines?country=za&pageSize=20';
+  const NEWS_API_URL = process.env.NEWS_API_URL || 'https://newsapi.org/v2/everything?q=South%20Africa&pageSize=20&sortBy=publishedAt&language=en';
   if(!NEWS_API_KEY){
     return res.status(503).json({ error: 'news-api-key-not-configured' });
   }
