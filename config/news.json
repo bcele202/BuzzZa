@@ -1,11 +1,11 @@
 {
   "liveApi": {
-    "url": "",
+    "url": "/api/news",
     "provider": "newsapi",
     "apiKey": "",
-    "apiKeyPlacement": "query",
-    "apiKeyName": "apiKey",
+    "apiKeyPlacement": "",
+    "apiKeyName": "",
     "query": "",
-    "note": "Fill liveApi.url and apiKey in config/news.json when integrating a live provider. Do NOT commit secrets."
+    "note": "Use /api/news (server proxy). Do NOT put API keys here. Configure NEWS_API_KEY in server environment."
   }
 }
