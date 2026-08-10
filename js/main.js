@@ -83,13 +83,23 @@ function setupTicker(articles){
   const ticker = document.getElementById('ticker');
   if(!ticker) return;
   if(!articles.length){ ticker.textContent = 'No demo headlines available.'; return; }
-  // use first 8 titles
+
+  // Build a repeating track for smooth looping: create content and append a cloned copy
   ticker.innerHTML = '';
+  const track = document.createElement('div');
+  track.className = 'ticker-track';
+
   articles.slice(0,8).forEach(a=>{
     const s = document.createElement('span');
+    s.className = 'ticker-item';
     s.textContent = `DEMO: ${a.title}`;
-    ticker.append(s);
+    track.appendChild(s);
   });
+
+  // Append track and a clone for seamless loop
+  ticker.appendChild(track);
+  const clone = track.cloneNode(true);
+  ticker.appendChild(clone);
 }
 
 function setupSearch(allArticles){

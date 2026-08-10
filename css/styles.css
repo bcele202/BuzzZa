@@ -6,6 +6,7 @@
   --gold:#d97706; /* gold/orange */
   --white:#ffffff;
   --max-width:1100px;
+  --ticker-duration:20s;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -36,7 +37,13 @@ body.nav-open{overflow:hidden}
 .primary-nav.open a{display:block}
 .breaking{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#2b0505;border-top:4px solid #7f1d1d}
 .breaking strong{background:#7f1d1d;padding:8px 12px;border-radius:6px;color:var(--white);font-weight:800}
-.ticker{white-space:nowrap;overflow:hidden;flex:1}
+.ticker{white-space:nowrap;overflow:hidden;flex:1;position:relative}
+.ticker-track{display:inline-flex;gap:48px;align-items:center;white-space:nowrap;will-change:transform;animation:ticker-scroll var(--ticker-duration) linear infinite}
+.ticker-item{display:inline-block;padding-right:48px}
+@keyframes ticker-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){
+  .ticker-track{animation:none}
+}
 .ticker span{display:inline-block;padding-right:48px}
 /* Hero */
 .hero{padding:22px 16px;background:linear-gradient(180deg, rgba(217,137,0,0.06), rgba(255,255,255,0.01));border-bottom:1px solid rgba(255,255,255,0.02)}
