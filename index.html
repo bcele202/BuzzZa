@@ -85,6 +85,8 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <!-- Load NewsData first so window.NewsData is available to main.js -->
+  <script src="js/news-data.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
