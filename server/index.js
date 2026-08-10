@@ -52,16 +52,52 @@ app.get('/api/news', async (req, res) => {
     const q = req.query.q; // e.g., search query
     const url = new URL(NEWS_API_URL);
     if(q) url.searchParams.set('q', q);
-    url.searchParams.set('apiKey', NEWS_API_KEY);
 
-    const r = await fetch(url.toString(), { method: 'GET' });
-    if(!r.ok){
-      const text = await r.text();
-      console.error('News provider error', r.status, text);
-      return res.status(502).json({ error: 'news-provider-error', status: r.status });
+    // Use server-side header for API key (preferred) and avoid exposing it in query
+    const headers = {
+      'X-Api-Key': NEWS_API_KEY,
+      'User-Agent': 'BuzzZA/1.0',
+      'Accept': 'application/json'
+    };
+
+    console.log('Proxying news request to provider:', url.toString());
+
+    const r = await fetch(url.toString(), { method: 'GET', headers, cache: 'no-cache' });
+
+    // Always log provider status and a short snippet of the response (or body length)
+    const status = r.status;
+    let bodyText = '';
+    try{
+      bodyText = await r.text();
+    }catch(e){
+      console.error('Failed to read provider response text', e && e.message);
     }
-    const body = await r.json();
+
+    console.log('News provider response status:', status);
+    if(bodyText){
+      const snippet = bodyText.slice(0, 1000);
+      console.log('News provider response body snippet:', snippet.replace(/\n/g,' '));
+    }
+
+    if(!r.ok){
+      // Try to include provider message in the error
+      console.error('News provider error', status, bodyText.substring(0,500));
+      return res.status(502).json({ error: 'news-provider-error', status: status, message: bodyText && bodyText.slice(0,500) });
+    }
+
+    // parse JSON body and normalize
+    let body;
+    try{
+      body = JSON.parse(bodyText || '{}');
+    }catch(e){
+      console.error('Failed to parse provider JSON', e && e.message);
+      return res.status(502).json({ error: 'news-provider-invalid-json' });
+    }
+
     const items = Array.isArray(body.articles) ? body.articles : (Array.isArray(body) ? body : []);
+
+    console.log('Provider returned article count:', items.length);
+
     const normalized = items.map((it,i)=> normalizeArticle(it,i));
     return res.json({ articles: normalized });
   }catch(err){
