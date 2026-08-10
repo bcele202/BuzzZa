@@ -43,8 +43,8 @@ function renderFeatured(article){
   const meta = el('div',{class:'meta'},[`${article.source || 'BuzzZA'} • ${formatDate(article.publishedAt)}`]);
   body.append(cat,h,p,meta);
   link.append(thumb,body);
-  const note = el('div',{class:'meta'},['DEMO DATA — not live news']);
-  f.append(link,note);
+  // Visible demo note removed per request — keep featured layout unchanged
+  f.append(link);
 }
 
 function renderGrid(articles){
@@ -75,7 +75,8 @@ function setupTicker(articles){
   articles.slice(0,8).forEach(a=>{
     const s = document.createElement('span');
     s.className = 'ticker-item';
-    s.textContent = `DEMO: ${a.title}`;
+    // Remove any leading "DEMO:" (case-insensitive) from titles while preserving original title otherwise
+    s.textContent = (a.title || '').replace(/^DEMO:\s*/i, '');
     track.appendChild(s);
   });
   ticker.appendChild(track);
