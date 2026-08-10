@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>BuzzZA — Article</title>
-  <meta name="description" content="BuzzZA article page. Demo content only.">
+  <meta name="description" content="BuzzZA article page.">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -41,8 +41,6 @@
       </div>
     </article>
 
-    <p class="legal">DEMO DATA — not live news. This page shows demo content from data/articles.json for layout and testing only.</p>
-
   </main>
 
   <footer class="site-footer">
@@ -58,9 +56,12 @@
         <a href="#">Privacy</a>
       </nav>
 
-      <p class="legal">© 2026 BuzzZA. Demo content only — not live news.</p>
+      <p class="legal">© 2026 BuzzZA.</p>
     </div>
   </footer>
+
+  <!-- Load shared NewsData loader so this page can attempt live /api/news -->
+  <script src="js/news-data.js"></script>
 
   <script>
     (function(){
@@ -88,11 +89,9 @@
         if(!id){ renderEmpty(); return; }
 
         try{
-          const res = await fetch('data/articles.json');
-          if(!res.ok){ console.error('Failed to fetch articles.json', res.status); renderEmpty(); return; }
-          const payload = await res.json();
-          const articles = payload.articles || [];
-          const article = articles.find(a => String(a.id) === String(id));
+          // Use the shared NewsData loader: tries live config (/api/news) then falls back to data/articles.json
+          const articles = await (window.NewsData ? window.NewsData.loadArticles() : []);
+          const article = (articles || []).find(a => String(a.id) === String(id));
           if(!article){ renderEmpty(); return; }
 
           // build article node
