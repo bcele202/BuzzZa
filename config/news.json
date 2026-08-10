@@ -1,0 +1,11 @@
+{
+  "liveApi": {
+    "url": "/api/news",
+    "provider": "newsapi",
+    "apiKey": "",
+    "apiKeyPlacement": "",
+    "apiKeyName": "",
+    "query": "",
+    "note": "Use /api/news (server proxy). Do NOT put API keys here. Configure NEWS_API_KEY in server environment."
+  }
+}

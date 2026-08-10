@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BuzzZA — Article</title>
+  <meta name="description" content="BuzzZA article page.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-top">
+      <a class="brand" href="index.html">
+        <img src="assets/logo-buzzza.svg" alt="BuzzZA logo" width="140" height="38">
+      </a>
+
+      <div class="search-wrap">
+        <label for="search" class="visually-hidden">Search BuzzZA</label>
+        <input id="search" type="search" placeholder="Search BuzzZA..." aria-label="Search BuzzZA">
+      </div>
+
+      <a href="index.html" class="back-home" aria-label="Back to homepage">Home</a>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <nav aria-label="Breadcrumb" class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">›</span>
+      <span id="bc-title">Article</span>
+    </nav>
+
+    <article id="article" class="article-page" aria-labelledby="article-title">
+      <!-- Populated by JS -->
+      <div id="notfound" hidden>
+        <h1>Article not found</h1>
+        <p>We couldn't find the article you were looking for. It may be missing or the link may be invalid.</p>
+        <p><a href="index.html">Return to the homepage</a></p>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="brand-footer">
+        <img src="assets/logo-buzzza.svg" alt="BuzzZA logo" width="120" height="32">
+        <p class="tag">News that moves the world.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+      </nav>
+
+      <p class="legal">© 2026 BuzzZA.</p>
+    </div>
+  </footer>
+
+  <!-- Load shared NewsData loader so this page can attempt live /api/news -->
+  <script src="js/news-data.js"></script>
+
+  <script>
+    (function(){
+      // Utility: read query param
+      function getQueryParam(name){
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      function formatDate(iso){
+        try{ const d = new Date(iso); return d.toLocaleString(); } catch(e){ return iso; }
+      }
+
+      const articleEl = document.getElementById('article');
+      const notFoundEl = document.getElementById('notfound');
+      const bcTitle = document.getElementById('bc-title');
+
+      function renderEmpty(){
+        if(articleEl) articleEl.innerHTML = '';
+        if(notFoundEl) notFoundEl.hidden = false;
+      }
+
+      async function loadAndRender(){
+        const id = getQueryParam('id');
+        if(!id){ renderEmpty(); return; }
+
+        try{
+          // Use the shared NewsData loader: tries live config (/api/news) then falls back to data/articles.json
+          const articles = await (window.NewsData ? window.NewsData.loadArticles() : []);
+          const article = (articles || []).find(a => String(a.id) === String(id));
+          if(!article){ renderEmpty(); return; }
+
+          // build article node
+          const container = document.createElement('div');
+          container.className = 'article-inner';
+
+          const cat = document.createElement('div');
+          cat.className = 'category-pill';
+          cat.textContent = article.category;
+
+          const h1 = document.createElement('h1');
+          h1.id = 'article-title';
+          h1.textContent = article.title;
+
+          const meta = document.createElement('div');
+          meta.className = 'meta';
+          meta.textContent = `${article.source || 'BuzzZA'} • ${formatDate(article.publishedAt)}`;
+
+          // image or placeholder
+          const imgWrap = document.createElement('div');
+          imgWrap.className = 'thumb';
+          if(article.image){
+            const img = document.createElement('img');
+            img.src = article.image;
+            img.alt = article.title;
+            img.style.width = '100%';
+            img.style.height = 'auto';
+            imgWrap.innerHTML = '';
+            imgWrap.appendChild(img);
+          } else {
+            imgWrap.textContent = (article.category || '').slice(0,2);
+            imgWrap.setAttribute('aria-hidden','true');
+          }
+
+          const content = document.createElement('div');
+          content.className = 'article-content';
+          // For demo, use excerpt as content. Real API should provide full content.
+          const p = document.createElement('p');
+          p.textContent = article.excerpt || '';
+          content.appendChild(p);
+
+          const back = document.createElement('p');
+          back.innerHTML = '<a href="index.html">← Back to home</a>';
+
+          container.appendChild(cat);
+          container.appendChild(h1);
+          container.appendChild(meta);
+          container.appendChild(imgWrap);
+          container.appendChild(content);
+          container.appendChild(back);
+
+          if(articleEl){ articleEl.innerHTML = ''; articleEl.appendChild(container); }
+          if(bcTitle) bcTitle.textContent = article.title;
+
+        }catch(err){
+          console.error('Error loading article', err);
+          renderEmpty();
+        }
+      }
+
+      // Run
+      loadAndRender();
+    })();
+  </script>
+</body>
+</html>
