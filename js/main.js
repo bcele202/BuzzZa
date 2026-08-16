@@ -28,14 +28,37 @@ function el(tag, attrs={}, children=[]) {
   children.forEach(c => node.append(typeof c === 'string' ? document.createTextNode(c) : c));
   return node;
 }
+function createThumb(article){
+  const thumb = el('div',{class:'thumb'});
 
-function renderFeatured(article){
+  if(article && article.image){
+    const img = document.createElement('img');
+    img.src = article.image;
+    img.alt = article.title || 'BuzzZA news image';
+    img.loading = 'lazy';
+
+    img.onerror = function(){
+      img.remove();
+      thumb.textContent = article.category ? article.category.slice(0,2) : 'BZ';
+    };
+
+    thumb.appendChild(img);
+  } else {
+    thumb.textContent = article && article.category
+      ? article.category.slice(0,2)
+      : 'BZ';
+  }
+
+  return thumb;
+}
+
+function renderfeactured(article){
   const f = document.getElementById('featured');
   if(!f) return;
   f.innerHTML='';
   if(!article) return;
   const link = el('a',{class:'featured-link',href:`article.html?id=${encodeURIComponent(article.id)}`,role:'link','aria-label':article.title});
-  const thumb = el('div',{class:'thumb'},[article.image || article.category.slice(0,2)]);
+  const thumb = createThumb(article);
   const body = el('div',{class:'f-body'});
   const cat = el('div',{class:'category-pill'},[article.category]);
   const h = el('h3',{},[article.title]);
@@ -53,7 +76,7 @@ function renderGrid(articles){
   grid.innerHTML='';
   articles.forEach(a=>{
     const card = el('a',{class:'card',href:`article.html?id=${encodeURIComponent(a.id)}`,tabIndex:0,'aria-label':a.title});
-    const thumb = el('div',{class:'thumb'},[a.image || a.category.slice(0,2)]);
+    const thumb = createThumb(a);
     const body = el('div',{class:'c-body'});
     const cat = el('div',{class:'category-pill'},[a.category]);
     const h = el('h3',{},[a.title]);
