@@ -52,7 +52,7 @@ function createThumb(article){
   return thumb;
 }
 
-function renderfeactured(article){
+function renderFeatured(article){
   const f = document.getElementById('featured');
   if(!f) return;
   f.innerHTML='';
